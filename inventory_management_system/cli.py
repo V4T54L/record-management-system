@@ -32,8 +32,8 @@ class CLI(object):
                 elif inp == "exit":
                     break
                 else:
-                    print("Invalid input, Please try again.\n")
-                input("Press any key to continue...")
+                    print("Invalid input, Please try again.")
+                input("\nPress any key to continue...")
         except KeyboardInterrupt:
             print("Interrupted by keyboard, Exiting...")
         except Exception as e:
@@ -43,7 +43,7 @@ class CLI(object):
             print("Saving data...")
             save_to_file(self.csv_path, self.inv_manager.inventory)
 
-        print("\n\nApplication terminated successfully")
+        print("\n\n[+] Application terminated successfully")
 
     def print_home(self):
         """Print home page"""
@@ -68,9 +68,9 @@ class CLI(object):
         product = Product(-1, name, description, price, quantity, status)
         status = self.inv_manager.add_product(product)
         if status == InventoryStatus.SUCCESS:
-            print("\n\n[+] Product added successfully.\n")
+            print("\n[+] Product added successfully.\n")
         else:
-            print(f"\n\n[-] Failed to add product : {status}.\n")
+            print(f"\n[-] Failed to add product : {status}.\n")
         return
 
     def update_product(self):
@@ -94,9 +94,9 @@ class CLI(object):
         product = Product(-1, name, description, price, quantity, status)
         status = self.inv_manager.update_product(product)
         if status == InventoryStatus.SUCCESS:
-            print("\n\n[+] Product added successfully.\n")
+            print("\n[+] Product added successfully.\n")
         else:
-            print(f"\n\n[-] Failed to add product : {status}.\n")
+            print(f"\n[-] Failed to add product : {status}.\n")
         return
 
     def delete_product(self):
@@ -105,12 +105,12 @@ class CLI(object):
         index = int(input("Product index : "))
         status = self.inv_manager.delete_product(index)
         if status == InventoryStatus.SUCCESS:
-            print("\n\n[+] Product added successfully.\n")
+            print("\n[+] Product added successfully.\n")
         else:
-            print(f"\n\n[-] Failed to add product : {status}.\n")
+            print(f"\n[-] Failed to add product : {status}.\n")
         return
 
     def print_products(self):
         """Prints products"""
-        print("PRINT ALL PRODUCTS:\n\n")
+        print("PRINT ALL PRODUCTS:\n")
         print(self.inv_manager.get_products_details())
