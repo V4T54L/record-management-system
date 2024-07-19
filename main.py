@@ -1,14 +1,11 @@
 from inventory_management_system.cli import CLI
+from inventory_management_system.csv_db import save_to_file
 
 
 def main():
-    app = CLI()
-    try:
-        app.start()
-    except KeyboardInterrupt:
-        print("Interrupted by keyboard, Exiting...")
-    except Exception as e:
-        print("Unhandled exception : ", e)
+    file_path = "./db.csv"
+    app = CLI(csv_path=file_path)
+    app.start()
 
 
 if __name__ == "__main__":

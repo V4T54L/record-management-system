@@ -2,13 +2,16 @@
 """
 
 from inventory_management_system.models import Inventory, Product, InventoryStatus
+from inventory_management_system.csv_db import load_from_file, save_to_file
 
 
 class CLI(object):
     """CLI application"""
 
-    def __init__(self) -> None:
+    def __init__(self, csv_path: str) -> None:
+        self.csv_path = csv_path
         self.inv_manager = Inventory()
+        self.inv_manager.inventory = load_from_file(csv_path)
         self.exit_message = "\nor type 'exit' to exit the application"
         self.choices = [
             self.print_products,
@@ -20,16 +23,25 @@ class CLI(object):
     def start(self) -> None:
         """Entry point for the CLI app"""
         inp = ""
-        while True:
-            self.print_home()
-            inp = input()
-            if inp.isnumeric() and 0 < int(inp) <= 4:
-                self.choices[int(inp) - 1]()
-            elif inp == "exit":
-                break
-            else:
-                print("Invalid input, Please try again.\n")
-            input("Press any key to continue...")
+        try:
+            while True:
+                self.print_home()
+                inp = input()
+                if inp.isnumeric() and 0 < int(inp) <= 4:
+                    self.choices[int(inp) - 1]()
+                elif inp == "exit":
+                    break
+                else:
+                    print("Invalid input, Please try again.\n")
+                input("Press any key to continue...")
+        except KeyboardInterrupt:
+            print("Interrupted by keyboard, Exiting...")
+        except Exception as e:
+            print("Unhandled exception : ", e)
+
+        finally:
+            print("Saving data...")
+            save_to_file(self.csv_path, self.inv_manager.inventory)
 
         print("\n\nApplication terminated successfully")
 
