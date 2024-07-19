@@ -16,7 +16,7 @@ class Product(object):
         index: int,
         name: str,
         description: str,
-        price: int,
+        price: float,
         quantity: int,
         status: str,
     ) -> None:
@@ -71,7 +71,7 @@ class Inventory(object):
     def __init__(self) -> None:
         self.inventory: List[Product] = []
 
-    def add_product(self, product: Product) -> str:
+    def add_product(self, product: Product):
         """Add a product to the inventory
 
         Args:
@@ -109,6 +109,10 @@ class Inventory(object):
             db_product.description = product.description
 
         # Input -1 as quantity if not provided
+        if len(product.price) > 0:
+            db_product.price = product.price
+
+        # Input -1 as quantity if not provided
         if len(product.quantity) != -1:
             db_product.quantity = product.quantity
 
@@ -142,11 +146,13 @@ class Inventory(object):
         self.inventory[index].status = ProductStatus.INACTIVE
         return InventoryStatus.SUCCESS
 
-    def get_active_products(self) -> str:
+    def get_products_details(self) -> str:
         """Get details of all products
 
         Returns:
             inventory_details(str): Concatenated details of all
             products in the inventory
         """
+        if len(self.inventory) == 0:
+            return "[-] Inventory is empty, no products to display."
         return "\n===================\n".join(map(str, self.inventory))

@@ -16,6 +16,6 @@ class ValidationStatus(Enum):
 
 
 class InventoryStatus(Enum):
-    SUCCESS = 1
-    FAILED = 2
-    INVALID_DATA = 3
+    SUCCESS = "success"
+    FAILED = "failed"
+    INVALID_DATA = "invalid data provided"
